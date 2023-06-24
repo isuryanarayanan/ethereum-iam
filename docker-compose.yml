@@ -1,0 +1,26 @@
+version: '3'
+services:
+  eiam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - MONGODB_DB=mydatabase
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/app
+
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: mongodb_eiam_container
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_INITDB_DATABASE: mydatabase
+
+volumes:
+  mongodbdata:
